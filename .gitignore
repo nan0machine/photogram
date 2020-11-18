@@ -13,4 +13,7 @@ out/
 *.zip
 *.tar.gz
 *.rar
+*.md
+mvnw
+*.cmd
 hs_err_pid*
