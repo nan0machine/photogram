@@ -1,8 +1,7 @@
 package com.example.photogram.repository;
 
 import com.example.photogram.model.Post;
-import com.example.photogram.model.User;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface PostRepository extends CrudRepository<Post, Long> {
+public interface PostRepository extends JpaRepository<Post, Long> {
 }
