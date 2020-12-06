@@ -5,7 +5,9 @@
 <div>
     <b>${post.id}</b>
     <span>${post.description}</span>
-    <img src="">
+    <#list post.photos as photo>
+        <img src="/img/${photo.uri}">
+    </#list>
 </div>
 <#else>
     No posts
