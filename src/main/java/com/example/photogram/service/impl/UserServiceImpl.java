@@ -3,7 +3,6 @@ package com.example.photogram.service.impl;
 import com.example.photogram.model.User;
 import com.example.photogram.repository.UserRepository;
 import com.example.photogram.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
