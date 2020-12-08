@@ -1,11 +1,15 @@
 package com.example.photogram.service.impl;
 
+import com.example.photogram.exception.NullEntityReferenceException;
 import com.example.photogram.model.User;
 import com.example.photogram.repository.UserRepository;
 import com.example.photogram.service.UserService;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.EntityNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -18,28 +22,45 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User create(User user) {
-        return userRepository.save(user);
+        if (user != null) {
+            return userRepository.save(user);
+        }
+        throw new NullEntityReferenceException("User cant be 'null'");
     }
 
     @Override
     public User update(User user) {
-        return userRepository.save(user);
+        if (user != null) {
+            User oldUser = readById(user.getId());
+            if (oldUser != null) {
+                return userRepository.save(user);
+            }
+        }
+        throw new NullEntityReferenceException("User cant be 'null'");
     }
 
     @Override
     public void delete(long id) {
-        userRepository.deleteById(id);
+        User user = readById(id);
+        if (user != null) {
+            userRepository.deleteById(id);
+        } else {
+            throw new EntityNotFoundException("User with id: " + id + " not found");
+        }
     }
 
     @Override
     public User readById(long id) {
-        //TODO: exception for user entity
-        return userRepository.findById(id).orElse(null);
+        Optional<User> optional = userRepository.findById(id);
+        if (optional.isPresent()) {
+            return optional.get();
+        }
+        throw new EntityNotFoundException("User with id: " + id + " not found");
     }
 
     @Override
     public List<User> getAll() {
         List<User> users = userRepository.findAll();
-        return users;
+        return users.isEmpty() ? new ArrayList<>() : users;
     }
 }
