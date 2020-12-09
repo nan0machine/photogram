@@ -4,12 +4,14 @@ import com.example.photogram.exception.NullEntityReferenceException;
 import com.example.photogram.model.Post;
 import com.example.photogram.repository.PostRepository;
 import com.example.photogram.service.PostService;
+import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Service
 public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
@@ -63,7 +65,8 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<Post> getPostsByUserId(long userId) {
-        List<Post> posts = postRepository.findPostsByUserId(userId);
+        List<Post> posts = postRepository.findPostsByOwner_Id(userId);
         return posts.isEmpty() ? new ArrayList<>() : posts;
     }
+
 }

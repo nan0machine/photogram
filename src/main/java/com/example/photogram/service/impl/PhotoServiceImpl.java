@@ -44,9 +44,11 @@ public class PhotoServiceImpl implements PhotoService {
         throw new EntityNotFoundException("Photo with id: " + id + " not found");
     }
 
+
     @Override
     public List<Photo> getPhotosByPostId(long postId) {
-        List<Photo> photos = photoRepository.findPhotosByPostId(postId);
+        List<Photo> photos = photoRepository.findPhotosByPost_Id(postId);
         return photos.isEmpty() ? new ArrayList<>() : photos;
     }
+
 }
