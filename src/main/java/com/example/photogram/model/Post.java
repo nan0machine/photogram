@@ -14,7 +14,7 @@ import java.util.List;
 @Table(name = "posts")
 public class Post {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne
@@ -23,6 +23,6 @@ public class Post {
 
     private String description;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE)
-    private List<Photo> photos;
+    @Column(name = "photo_name", nullable = false)
+    private String photoName;
 }

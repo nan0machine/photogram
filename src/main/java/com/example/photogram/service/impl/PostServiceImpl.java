@@ -4,15 +4,23 @@ import com.example.photogram.exception.NullEntityReferenceException;
 import com.example.photogram.model.Post;
 import com.example.photogram.repository.PostRepository;
 import com.example.photogram.service.PostService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.EntityNotFoundException;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class PostServiceImpl implements PostService {
+
+    @Value("${upload.path}")
+    private String uploadPath;
 
     private final PostRepository postRepository;
 
@@ -21,9 +29,28 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public Post create(Post post) {
+    public Post create(Post post, MultipartFile file) {
         if (post != null) {
-            return postRepository.saveAndFlush(post);
+
+            if (file != null) {
+                File uploadDir = new File(uploadPath);
+
+                if (!uploadDir.exists()) {
+                    uploadDir.mkdir();
+                }
+
+                String uuidFile = UUID.randomUUID().toString();
+                String resultName = uuidFile + "." + file.getOriginalFilename();
+
+                try {
+                    file.transferTo(new File(uploadPath + "/" + resultName));
+                } catch (IOException exception) {
+                    exception.printStackTrace();
+                }
+
+                post.setPhotoName(resultName);
+                return postRepository.saveAndFlush(post);
+            }
         }
         throw new NullEntityReferenceException("Post cant be 'null'");
     }
