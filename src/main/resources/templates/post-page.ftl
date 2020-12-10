@@ -6,8 +6,6 @@
     <@l.logout />
 </div>
 <h2>${post.id} Post</h2>
-<#list post.photos as photo>
-    <img src="/img/${photo.uri}">
-</#list>
+<img src="/img/${post.photoName}">
 <div><b>${post.description}</b></div>
 </@c.page>
