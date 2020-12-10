@@ -3,5 +3,5 @@
 
 <@c.page>
 <h1>Registration</h1>
-<@l.login "/registration" />
+<@l.login "/user/create" />
 </@c.page>

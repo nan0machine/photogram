@@ -16,37 +16,41 @@ public class PostController {
         this.postService = postService;
     }
 
-    @GetMapping("/create")
+    @GetMapping("/create/user/{user_id}")
     public String create(Model model) {
         model.addAttribute("post", new Post());
         return "create-post";
     }
 
-    @PostMapping("/create")
+    @PostMapping("/create/user/{user_id}")
     public String create(@ModelAttribute("post") Post post) {
        Post newPost = postService.create(post);
        return "redirect:/post/" + newPost.getId();
     }
 
-    @GetMapping("/{id}/update")
+    @GetMapping("/{id}/update/user/{user_id}")
     public String update(@PathVariable long id, Model model) {
-        model.addAttribute("post", postService.readById(id));
-        return "update_post";
+        Post post = postService.readById(id);
+        model.addAttribute("post", post);
+        return "update-post";
     }
 
-    @PostMapping("/{id}/update")
-    public String update(@PathVariable long id, @ModelAttribute("post") Post post, Model model) {
-        long postId = postService.update(post).getId();
-        return "redirect:/post/" + postId;
+    @PostMapping("/{id}/update/user/{user_id}")
+    public String update(@RequestParam("postId") Post post,
+                         @RequestParam String description) {
+
+        post.setDescription(description);
+        Post updatedPost = postService.update(post);
+        return "redirect:/post/" + updatedPost.getId();
     }
 
     @GetMapping("/{id}")
     public String read(@PathVariable long id, Model model) {
         model.addAttribute("post", postService.readById(id));
-        return "post_page";
+        return "post-page";
     }
 
-    @GetMapping("/{id}/delete")
+    @GetMapping("/{id}/delete/user/{user_id}")
     public String delete(@PathVariable long id) {
         long ownerId = postService.readById(id).getOwner().getId();
         postService.delete(id);
@@ -56,6 +60,6 @@ public class PostController {
     @GetMapping("/all")
     public String getAll(Model model) {
         model.addAttribute("posts", postService.getAll());
-        return "posts_list";
+        return "posts-list";
     }
 }

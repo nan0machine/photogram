@@ -9,19 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/")
-public class HomeController {
-    @Autowired
-    PostRepository postRepository;
+public class GreetingController {
 
     @GetMapping
     public String greeting() {
         return "greeting";
-    }
-
-    @GetMapping("/main")
-    public String home(Model model) {
-
-        model.addAttribute("posts", postRepository.findAll());
-        return "main";
     }
 }
