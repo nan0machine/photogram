@@ -9,9 +9,7 @@
 <div>
     <b>${post.id}</b>
     <span>${post.description}</span>
-    <#list post.photos as photo>
-        <img src="/img/${photo.uri}">
-    </#list>
+    <img src="/img/${post.photoName}">
 </div>
 <#else>
     No posts
