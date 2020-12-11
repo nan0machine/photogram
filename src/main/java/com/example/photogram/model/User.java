@@ -27,12 +27,15 @@ public class User {
     @Column(nullable = false)
     private String password;
 
+    @Enumerated(EnumType.STRING)
+    private Role role;
+
     @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
     private List<Post> posts;
 
     public UserDetails getUserDetails() {
         return new org.springframework.security.core.userdetails.User(
-                this.email, this.password, Set.of(new SimpleGrantedAuthority("ROLE_USER"))
+                this.email, this.password, Set.of(new SimpleGrantedAuthority("ROLE_" + role.name()))
         );
     }
 }
