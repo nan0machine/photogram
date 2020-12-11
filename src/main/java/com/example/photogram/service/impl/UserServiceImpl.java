@@ -4,7 +4,11 @@ import com.example.photogram.exception.NullEntityReferenceException;
 import com.example.photogram.model.User;
 import com.example.photogram.repository.UserRepository;
 import com.example.photogram.service.UserService;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.ArrayList;
@@ -12,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -62,5 +66,13 @@ public class UserServiceImpl implements UserService {
     public List<User> getAll() {
         List<User> users = userRepository.findAll();
         return users.isEmpty() ? new ArrayList<>() : users;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findUserByName(username)
+                .orElseThrow(() -> new UsernameNotFoundException("Not found: " + username));
+        return user.getUserDetails();
     }
 }
