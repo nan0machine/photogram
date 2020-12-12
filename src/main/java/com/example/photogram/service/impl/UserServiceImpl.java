@@ -7,6 +7,7 @@ import com.example.photogram.service.UserService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,17 +20,21 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService, UserDetailsService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder bCryptPasswordEncoder;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
+        this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
     @Override
     public User create(User user) {
-        if (user != null) {
+        try {
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             return userRepository.save(user);
+        } catch (IllegalArgumentException e) {
+            throw new NullEntityReferenceException("User cant be 'null'");
         }
-        throw new NullEntityReferenceException("User cant be 'null'");
     }
 
     @Override
