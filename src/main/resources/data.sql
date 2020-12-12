@@ -1,4 +1,4 @@
-INSERT INTO users (id, name, email, password ) VALUES (1, 'Nick', 'nick@mail.com', '$2a$10$CJg');
+INSERT INTO users (id, name, email, password, role) VALUES (70, 'Nick', 'nick@mail.com', '$2y$12$tr1bSiBILQw9xEngXXr6gOBQDmR7QF0vADS5DCKfHXfymoKTnFbFi', 'USER');
 
-INSERT INTO posts (id, owner_id, description, photo_name) VALUES (70, 1, 'Hello World', 'photo1.jpg');
-INSERT INTO posts (id, owner_id, description, photo_name) VALUES (71, 1, 'Hi there', 'photo2.jpg');
+INSERT INTO posts (id, owner_id, description, photo_name) VALUES (70, 70, 'Hello World', 'photo1.jpg');
+INSERT INTO posts (id, owner_id, description, photo_name) VALUES (71, 70, 'Hi there', 'photo2.jpg');

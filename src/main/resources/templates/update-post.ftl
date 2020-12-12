@@ -10,9 +10,7 @@
     <input type="hidden" name="postId" value="${post.id}" />
     <div> Photo : </div>
     <div>
-    <#list post.photos as photo>
-        <img src="/img/${photo.uri}">
-    </#list>
+        <img src="/img/${post.photoName}">
     </div>
     <div><label> Description : <input type="text" name="description" value="${post.description}"/> </label></div>
     <input type="hidden" name="_csrf" value="${_csrf.token}" />
