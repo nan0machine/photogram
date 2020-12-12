@@ -1,8 +1,10 @@
 package com.example.photogram.controller;
 
 import com.example.photogram.model.Post;
+import com.example.photogram.model.User;
 import com.example.photogram.service.PostService;
 import com.example.photogram.service.UserService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -28,14 +30,15 @@ public class PostController {
 
     @PostMapping("/create")
     public String create(@RequestParam("file") MultipartFile file,
-                         @RequestParam String description) {
+                         @RequestParam String description,
+                         @AuthenticationPrincipal User user) {
+        User owner = userService.readById(user.getId());
 
         Post post = new Post();
         post.setDescription(description);
-        post.setOwner(userService.readById(1));
+        post.setOwner(owner);
 
         post = postService.create(post, file);
-
         return "redirect:/post/" + post.getId();
     }
 
