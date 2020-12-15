@@ -7,9 +7,16 @@
 </div>
 <h2>Create a new Post</h2>
 <form action="/post/create" method="post" enctype="multipart/form-data">
-    <div><label> Description : <input type="text" name="description" placeholder="Enter a description"/> </label></div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label">Description : </label>
+        <div class="col-sm-6">
+            <input type="text" name="description" class="form-control" placeholder="Enter a description"/>
+        </div>
+    </div>
     <input type="file" name="file"/>
     <input type="hidden" name="_csrf" value="${_csrf.token}" />
-    <div><input type="submit" value="Create"/></div>
+    <div>
+        <button type="submit" class="btn btn-primary">Create post</button>
+    </div>
 </form>
 </@c.page>

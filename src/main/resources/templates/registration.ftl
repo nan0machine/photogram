@@ -3,10 +3,25 @@
 <@c.page>
 <h1>Registration</h1>
 <form action="/registration" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Email : <input type="text" name="email"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label"> User Name : </label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="username"/>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label"> Email : </label>
+        <div class="col-sm-6">
+            <input type="text" class="form-control" name="email"/>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label class="col-sm-2 col-form-label"> Password: </label>
+        <div class="col-sm-6">
+            <input type="password" class="form-control" name="password"/>
+        </div>
+    </div>
     <input type="hidden" name="_csrf" value="${_csrf.token}" />
-    <div><input type="submit" value="Create account"/></div>
+    <button type="submit" class="btn btn-primary">Create account</button>
 </form>
 </@c.page>

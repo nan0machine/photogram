@@ -4,5 +4,5 @@
 <@c.page>
 <h1>Welcome!</h1>
 <@l.login "/login" />
-<a href="/registration">Add new user</a>
+<a href="/registration">Registration</a>
 </@c.page>
