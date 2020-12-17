@@ -2,10 +2,14 @@ package com.example.photogram.model;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Pattern;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
@@ -19,12 +23,18 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
+    @Pattern(regexp = "[A-Z][a-z]+",
+            message = "Must start with a capital letter followed by one or more lowercase letters")
     @Column(nullable = false, unique = true)
     private String name;
 
+    @Email(message = "Must be a valid e-mail address")
+    @NotBlank(message = "Email cannot be empty!")
     @Column(nullable = false, unique = true)
     private String email;
 
+    //   @Pattern(regexp = "(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{6,}",
+    //            message = "Must be minimum 6 characters, at least one letter and one number")
     @Column(nullable = false)
     private String password;
 

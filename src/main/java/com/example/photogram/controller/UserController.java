@@ -6,8 +6,11 @@ import com.example.photogram.service.PostService;
 import com.example.photogram.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Controller
@@ -31,18 +34,6 @@ public class UserController {
     public String activity(@PathVariable long id, Model model) {
         model.addAttribute("user", userService.readById(id));
         return "activity";
-    }
-
-    @GetMapping("/create")
-    public String create(Model model) {
-        model.addAttribute("user", new User());
-        return "registration";
-    }
-
-    @PostMapping("/create")
-    public String create(@ModelAttribute("user") User user) {
-        long id = userService.create(user).getId();
-        return "redirect:/user/" + id;
     }
 
     @GetMapping("/{id}")

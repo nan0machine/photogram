@@ -33,7 +33,7 @@
         <#else>
         No posts
     </#list>
-</div>
+    </div>
 </@c.page>
 
 

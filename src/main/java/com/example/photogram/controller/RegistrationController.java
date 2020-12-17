@@ -4,10 +4,11 @@ import com.example.photogram.model.Role;
 import com.example.photogram.model.User;
 import com.example.photogram.service.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/registration")
@@ -25,17 +26,17 @@ public class RegistrationController {
     }
 
     @PostMapping
-    public String registration(@RequestParam String username,
-                                @RequestParam String email,
-                                @RequestParam String password) {
-        User user= new User();
-        user.setName(username);
-        user.setEmail(email);
-        user.setPassword(password);
-        user.setRole(Role.USER);
-
-        user = userService.create(user);
-
-        return "redirect:/user/" + user.getId();
+    public String registration(@Valid @ModelAttribute User user,
+                               BindingResult bindingResult,
+                               Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("user", user);
+            model.mergeAttributes(ControllerUtils.getErrors(bindingResult));
+            return "registration";
+        } else {
+            user.setRole(Role.USER);
+            user = userService.create(user);
+            return "redirect:/user/" + user.getId();
+        }
     }
 }
