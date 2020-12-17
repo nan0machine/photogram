@@ -1,10 +1,6 @@
 <#import "parts/common.ftl" as c>
-<#import "parts/login.ftl" as l>
 
 <@c.page>
-<div>
-    <@l.logout />
-</div>
 <h2>Update ${post.owner.name}'s Post</h2>
 <form action="/post/${post.id}/update/user/${post.owner.id}" method="post">
     <input type="hidden" name="postId" value="${post.id}" />

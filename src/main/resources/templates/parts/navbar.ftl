@@ -1,4 +1,5 @@
 <#include "security.ftl">
+<#import "login.ftl" as l>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/main">Photogram</a>
@@ -18,6 +19,7 @@
                 <a class="nav-link" href="#">All posts</a>
             </li>
         </ul>
-        <div class="navbar-text">${name}</div>
+        <div class="navbar-text mr-3">${name}</div>
+        <@l.logout />
     </div>
 </nav>
