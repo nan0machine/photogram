@@ -7,8 +7,11 @@ import com.example.photogram.service.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/post")
@@ -23,17 +26,21 @@ public class PostController {
     }
 
     @GetMapping("/create")
-    public String create(Model model) {
-        model.addAttribute("post", new Post());
+    public String create() {
         return "create-post";
     }
 
     @PostMapping("/create")
     public String create(@RequestParam("file") MultipartFile file,
                          @RequestParam String description,
-                         @AuthenticationPrincipal User user) {
-        User owner = userService.readById(user.getId());
+                         @AuthenticationPrincipal User user,
+                         Model model) {
+        if (file.isEmpty()) {
+            model.addAttribute("fileInvalid", "Please add a photo.");
+            return "create-post";
+        }
 
+        User owner = userService.readById(user.getId());
         Post post = new Post();
         post.setDescription(description);
         post.setOwner(owner);

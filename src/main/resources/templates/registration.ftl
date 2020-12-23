@@ -39,7 +39,7 @@
             <div class="invalid-feedback">
                 ${passwordInvalid}
             </div>
-        </#if>
+            </#if>
         </div>
     </div>
     <input type="hidden" name="_csrf" value="${_csrf.token}" />
