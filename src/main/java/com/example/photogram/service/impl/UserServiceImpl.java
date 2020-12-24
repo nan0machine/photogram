@@ -73,6 +73,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         return users.isEmpty() ? new ArrayList<>() : users;
     }
 
+    public void unfollow(User currentUser, User user) {
+        user.getFollowers().remove(currentUser);
+        update(user);
+    }
+
+    public void follow(User currentUser, User user) {
+        user.getFollowers().add(currentUser);
+        update(user);
+    }
+
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

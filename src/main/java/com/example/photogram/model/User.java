@@ -10,10 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Pattern;
-import java.util.Collection;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Data
@@ -44,6 +41,22 @@ public class User implements UserDetails {
 
     @OneToMany(mappedBy = "owner", cascade = CascadeType.REMOVE)
     private List<Post> posts;
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_subscriptions",
+            joinColumns = {@JoinColumn(name = "profile_id")},
+            inverseJoinColumns = {@JoinColumn(name = "follower_id")}
+    )
+    private List<User> followers = new ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "user_subscriptions",
+            joinColumns = {@JoinColumn(name = "follower_id")},
+            inverseJoinColumns = {@JoinColumn(name = "profile_id")}
+    )
+    private List<User> following = new ArrayList<>();
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

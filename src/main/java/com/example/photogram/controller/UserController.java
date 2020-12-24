@@ -4,6 +4,7 @@ import com.example.photogram.model.Post;
 import com.example.photogram.model.User;
 import com.example.photogram.service.PostService;
 import com.example.photogram.service.UserService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -34,11 +35,21 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public String read(@PathVariable long id, Model model) {
+    public String read(@PathVariable long id,
+                       Model model,
+                       @AuthenticationPrincipal User currentUser
+                       ) {
         User user = userService.readById(id);
         List<Post> posts = postService.getPostsByUserId(id);
+
         model.addAttribute("user", user);
         model.addAttribute("posts", posts);
+        model.addAttribute("isFollower", user.getFollowers().contains(currentUser));
+        model.addAttribute("numberOfPosts", posts.size());
+        model.addAttribute("followers", user.getFollowers().size());
+        model.addAttribute("following", user.getFollowing().size());
+        model.addAttribute("isCurrentUser", user.equals(currentUser));
+
         return "user-page";
     }
 
@@ -69,5 +80,21 @@ public class UserController {
     public String getAll(Model model) {
         model.addAttribute("users", userService.getAll());
         return "user-list";
+    }
+
+    @GetMapping("/unfollow/{user}")
+    public String unfollow(@PathVariable User user,
+                           @AuthenticationPrincipal User currentUser) {
+
+        userService.unfollow(currentUser, user);
+        return "redirect:/user/" + user.getId();
+    }
+
+    @GetMapping("/follow/{user}")
+    public String follow(@PathVariable User user,
+                           @AuthenticationPrincipal User currentUser) {
+
+        userService.follow(currentUser, user);
+        return "redirect:/user/" + user.getId();
     }
 }
