@@ -6,6 +6,7 @@
     <#assign
         user = Session.SPRING_SECURITY_CONTEXT.authentication.principal
         name = user.getUsername()
+        currentUserId = user.getId()
     >
 <#else>
     <#assign name = "Guest" >

@@ -5,7 +5,7 @@
     <div class="row align-items-center align-items-lg-start mb-5">
         <div class="col-xl-1"></div>
         <div class="col-lg-5 col-md-4">
-            <img src="/img/photo1.jpg" class="rounded-circle mx-auto d-block" alt="" width="300" height="300">
+            <img src="/img/profile-icon.jpg" class="rounded-circle mx-auto d-block" alt="" width="250" height="250">
         </div>
         <div class="col-lg-5 col-md-7 my-5 px-5">
             <div>
@@ -22,14 +22,9 @@
         </div>
     </div>
     <div class="card-columns">
-        <#assign posts = user.posts >
+        <#assign posts = user.posts>
         <#list posts as post>
-        <div class="card">
-            <img class="card-img-top" src="/img/${post.photoName}" alt="image">
-            <div class="card-body">
-                <p class="card-title">${post.description}</p>
-            </div>
-        </div>
+            <#include "parts/card.ftl">
         <#else>
         No posts
     </#list>

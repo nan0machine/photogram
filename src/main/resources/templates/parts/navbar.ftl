@@ -2,8 +2,13 @@
 <#import "login.ftl" as l>
 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="/main">Photogram</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <a class="navbar-brand" href="/">Photogram</a>
+    <button class="navbar-toggler"
+            type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -16,10 +21,12 @@
                 <a class="nav-link" href="#">Activity</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">All posts</a>
+                <a class="nav-link" href="/post/all">All posts</a>
             </li>
         </ul>
         <div class="navbar-text mr-3">${name}</div>
-        <@l.logout />
+        <#if user??>
+            <@l.logout />
+        </#if>
     </div>
 </nav>

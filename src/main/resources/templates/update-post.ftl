@@ -1,9 +1,9 @@
 <#import "parts/common.ftl" as c>
 
 <@c.page>
-<h2>Update ${post.owner.name}'s Post</h2>
-<form action="/post/${post.id}/update/user/${post.owner.id}" method="post">
-    <input type="hidden" name="postId" value="${post.id}" />
+<h2>Edit info</h2>
+<form action="/post/${post.id}/update" method="post">
+    <input type="hidden" name="post" value="${post.id}" />
     <div> Photo : </div>
     <div>
         <img src="/img/${post.photoName}">

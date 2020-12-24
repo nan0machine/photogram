@@ -7,11 +7,8 @@ import com.example.photogram.service.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/post")
@@ -57,12 +54,15 @@ public class PostController {
     }
 
     @PostMapping("/{id}/update")
-    public String update(@RequestParam("postId") Post post,
-                         @RequestParam String description) {
+    public String update(@AuthenticationPrincipal User user,
+                         @RequestParam Post post,
+                         @RequestParam String description ) {
 
-        post.setDescription(description);
-        Post updatedPost = postService.update(post);
-        return "redirect:/post/" + updatedPost.getId();
+        if (user.equals(post.getOwner())) {
+            post.setDescription(description);
+            post = postService.update(post);
+        }
+        return "redirect:/post/" + post.getId();
     }
 
     @GetMapping("/{id}")
