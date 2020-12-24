@@ -5,7 +5,7 @@
     <div class="row align-items-center align-items-lg-start mb-5">
         <div class="col-xl-1"></div>
         <div class="col-lg-5 col-md-4">
-            <img src="/img/profile-icon.jpg" class="rounded-circle mx-auto d-block" alt="" width="250" height="250">
+            <img src="/img/profile-icon.jpg" class="rounded-circle mx-auto d-block" alt="" style="max-width: 55%; height: auto;">
         </div>
         <div class="col-lg-5 col-md-7 my-5 px-5">
             <div>

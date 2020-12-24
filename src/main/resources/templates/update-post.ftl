@@ -5,8 +5,11 @@
 <form action="/post/${post.id}/update" method="post">
     <input type="hidden" name="post" value="${post.id}" />
     <div> Photo : </div>
-    <div>
-        <img src="/img/${post.photoName}">
+    <div class="mb-4">
+        <img src="/img/${post.photoName}"
+             alt="photo"
+             class="rounded"
+             style="max-width: 55%; height: auto;">
     </div>
     <div><label> Description : <input type="text" name="description" value="${post.description}"/> </label></div>
     <input type="hidden" name="_csrf" value="${_csrf.token}" />
