@@ -5,6 +5,7 @@ import com.example.photogram.model.User;
 import com.example.photogram.service.PostService;
 import com.example.photogram.service.UserService;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -82,19 +83,34 @@ public class UserController {
         return "user-list";
     }
 
-    @GetMapping("/unfollow/{user}")
+    @GetMapping("/{action}/{user}")
     public String unfollow(@PathVariable User user,
+                           @PathVariable String action,
                            @AuthenticationPrincipal User currentUser) {
 
-        userService.unfollow(currentUser, user);
+        if (action.equals("follow")) {
+            userService.follow(currentUser, user);
+        } else if (action.equals("unfollow")) {
+            userService.unfollow(currentUser, user);
+        } else {
+            //todo: 404-page.
+        }
         return "redirect:/user/" + user.getId();
     }
 
-    @GetMapping("/follow/{user}")
-    public String follow(@PathVariable User user,
-                           @AuthenticationPrincipal User currentUser) {
+    @GetMapping("/{type}/{user}/list")
+    public String usersList(Model model,
+                            @PathVariable User user,
+                            @PathVariable String type) {
 
-        userService.follow(currentUser, user);
-        return "redirect:/user/" + user.getId();
+        model.addAttribute("profile", user);
+        model.addAttribute("type", type);
+
+        if (type.equals("followers")) {
+            model.addAttribute("users", user.getFollowers());
+        } else {
+            model.addAttribute("users", user.getFollowing());
+        }
+        return "follow";
     }
 }

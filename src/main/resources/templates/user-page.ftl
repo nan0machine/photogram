@@ -11,8 +11,16 @@
         <div class="col-lg-5 col-md-7 my-5 px-5">
             <div>
                 <h5>Posts: <span class="badge badge-secondary">${numberOfPosts}</span></h5>
-                <h5>Followers: <span class="badge badge-secondary">${followers}</span></h5>
-                <h5>Following: <span class="badge badge-secondary">${following}</span></h5>
+                <h5>Followers:
+                    <a href="/user/followers/${user.id}/list">
+                    <span class="badge badge-secondary">${followers}</span>
+                    </a>
+                </h5>
+                <h5>Following:
+                    <a href="/user/following/${user.id}/list">
+                    <span class="badge badge-secondary">${following}</span>
+                    </a>
+                </h5>
             </div>
             <#if isCurrentUser>
                 <form action="/user/${user.id}/update" method="get">
